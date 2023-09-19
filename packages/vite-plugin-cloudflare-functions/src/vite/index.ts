@@ -108,6 +108,14 @@ export function CloudflarePagesFunctions(userConfig: UserConfig = {}): Plugin {
       command.push(compatibilityDate);
     }
 
+    const compatibilityFlags = userConfig.wrangler?.compatibilityFlags;
+    if (compatibilityFlags) {
+      for (const flag in compatibilityFlags) {
+        command.push("--compatibility-flag")
+        command.push(flag)
+      }
+    }
+
     debug(command);
 
     wranglerProcess = spawn('npx', command, {
